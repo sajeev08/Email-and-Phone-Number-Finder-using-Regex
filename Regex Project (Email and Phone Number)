@@ -1,0 +1,41 @@
+import re, pyperclip
+
+final_string = ''
+
+content = pyperclip.paste()
+
+
+phone_pattern = re.compile(r'(?:\+\d{,2})[\s-]?\d{10}') # phone number of format country code + 10 digits
+
+email_pattern = re.compile(r'[\w.]+(?:-\w+)*@\w+(?:-\w+)*\.(?:-\w+)*\w+', re.I) #non capturing group is used because no action is to be performed on the group. Only need it for easy use of regex symbols
+
+
+phone_match = phone_pattern.findall(content)
+
+email_match = email_pattern.findall(content)
+
+
+if phone_match == []:
+    print("No phone number found!")
+    
+else:
+    for phone in phone_match:
+        final_string += phone+ '\n'
+    
+if email_match == []:
+    print("No email found!")
+    
+else:
+    for email in email_match:
+        final_string += email + '\n'
+        
+
+if final_string == '':
+    print("Nothing to Copy!!")
+    
+else:
+    print(final_string)
+
+    pyperclip.copy(final_string)
+
+    print("String copied successfully!")
